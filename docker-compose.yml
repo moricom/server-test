@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: db1
+      MYSQL_ROOT_PASSWORD: pass
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3306:3306"
+    volumes:
+      # - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    # volumes:
+    #   - ".redis/data/:/data"
+  nodejs:
+    image: node:12
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/var/app
+    links:
+      - db
+    working_dir: /var/app
+    # command: node /var/app/bin/www
+
+    # dev
+    command: npm run dev
+    # command: seh /var/app/wait.sh

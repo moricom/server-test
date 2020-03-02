@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Type: application/json" -d '{"email":"hoge@fuga.com", "password":"pass123"}' localhost:3000/login
