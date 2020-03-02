@@ -25,7 +25,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./app:/var/app
+      - ./server:/var/app
     links:
       - db
     working_dir: /var/app
